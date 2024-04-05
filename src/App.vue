@@ -1,21 +1,16 @@
-<template>
-  <Game />
-</template>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-import Game from './components/Game.vue'
-
-export default defineComponent({
-  name: 'App',
-
-  components: {
-    Game,
-  },
-})
+<script lang="ts" setup>
+import GameContainer from './components/GameContainer.vue'
 </script>
 
-<style lang="scss">
+<template>
+  <ul>
+    <li>Resume Game</li>
+    <li>New Game</li>
+  </ul>
+  <GameContainer/>
+</template>
+
+<style>
   html {
     height: 100%;
   }
@@ -33,5 +28,9 @@ export default defineComponent({
     align-items: center;
     justify-content: center;
     height: 100%;
+  }
+
+  .center {
+    text-align: center;
   }
 </style>

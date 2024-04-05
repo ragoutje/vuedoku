@@ -1,22 +1,42 @@
 <template>
   <div
-      :id="cell.id"
       class="cell"
-      @click="isClicked">
-    {{ cell.value > 0 ? cell.value : '' }}
+      :class="{ 'initial': initial, 'highlighted': selectedNumber === visualValue}"
+      @click="handleClick"
+      >
+    {{ visualValue }}
   </div>
 </template>
 
 <script lang="ts">
 export default {
   name: 'Cell',
+
   props: [
-    'cell',
+    'index',
+    'puzzleValue',
+    'solutionValue',
+    'inputValue',
+    'selectedNumber',
   ],
+
+  computed: {
+    initial() {
+      return this.puzzleValue !== '-'
+    },
+
+    activeValue() {
+      return this.inputValue !== '-' ? this.inputValue : this.puzzleValue;
+    },
+
+    visualValue() {
+      return this.activeValue.replace('-', '')
+    }
+  },
+
   methods: {
-    isClicked() {
-      console.log('clicked', this.cell);
-      // this.$emit('action', {action: 'enterDigit', cell: this.cell});
+    handleClick() {
+      this.$emit('clicked', this.index);
     }
   }
 }
@@ -40,8 +60,9 @@ export default {
   font-weight: 300;
   text-align: center;
   vertical-align: middle;
+  user-select: none;
 
-  &.disabled {
+  &.initial {
     font-weight: 800;
   }
 

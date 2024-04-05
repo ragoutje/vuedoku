@@ -1,38 +1,30 @@
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const emit = defineEmits(['selectNumber']);
+
+const props = defineProps(['input'])
+const selectedNumber = ref("-");
+
+const numberClick = (newVal: string) => {
+  selectedNumber.value = selectedNumber.value === newVal ? '-' : newVal;
+  emit('selectNumber', selectedNumber.value)
+}
+
+const countRegex = (val: string) => new RegExp(/[^${val}]/g);
+</script>
+
 <template>
   <div class="number-picker">
     <div
-        v-for="nr in [1,2,3,4,5,6,7,8,9]"
-        :class="{'number': true, 'active': selectedNumber === nr}" @click="onClick(nr)">
+        v-for="nr in '123456789'"
+        :key="`number-picker-${nr}`"
+        :class="{'number': true, 'active': selectedNumber === nr, 'completed': (input.split(nr).length-1) === 9}" @click="numberClick(nr)"
+      >
       {{ nr }}
     </div>
   </div>
 </template>
-
-<script lang="ts">
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  name: 'NumberPicker',
-
-  data () {
-    return {
-      selectedNumber: 0
-    }
-  },
-
-  methods: {
-    onClick(value: number) {
-      if (this.selectedNumber === value) {
-        this.selectedNumber = 0;
-      } else {
-        this.selectedNumber = value;
-      }
-
-      this.$emit('selectNumber', {number: this.selectedNumber})
-    }
-  }
-});
-</script>
 
 <style lang="scss" scoped>
 .number-picker {
@@ -64,19 +56,32 @@ export default defineComponent({
     line-height: 0;
   }
 
-  background-color: white;
+  background-color: rgb(150, 150, 150);
+  color: white;
   font-family: 'Roboto', sans-serif;
   font-size: 2.5vh;
   font-weight: 300;
   text-align: center;
   vertical-align: middle;
-
-  &.active {
-    background-color: #fcffc8;
-  }
+  user-select: none;
 
   @media (orientation: portrait) {
     font-size: 2.5vw;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &.completed {
+    color: #acacac;
+    background-color: #e0e0e0;
+    font-style: italic;
+  }
+
+  &.active {
+    color: #fff;
+    background-color: #313131;
   }
 }
 </style>
