@@ -1,17 +1,25 @@
 <script lang="ts" setup>
-import { onBeforeMount, onMounted, ref, unref, watch } from "vue";
+import { onBeforeMount, onMounted, ref, unref, watch, defineEmits } from "vue";
 import SudokuGrid from './SudokuGrid.vue';
 import NumberPicker from './NumberPicker.vue';
 import * as sudokuService from "../services/SudokuService";
 import * as localStorageService from "../services/LocalStorageService";
+import { Difficulty } from "sudoku-gen/dist/types/difficulty.type";
 
 const initialized = ref(false);
-const selectedNumber = ref('0');
+const selectedNumber = ref('-');
 const puzzle = ref('');
 const solution = ref('');
 const input = ref('');
 const difficulty = ref('');
-const completed = ref(false)
+const completed = ref(false);
+
+interface GameContainerProps {
+    selectedDifficulty: Difficulty
+}
+const props = defineProps<GameContainerProps>();
+
+const emit = defineEmits(['show-menu']);
 
 onBeforeMount(() => {
   setTimeout(() => {
@@ -22,7 +30,7 @@ onBeforeMount(() => {
     if (storedSudoku?.length) {
       loadedCells = JSON.parse(storedSudoku);
     } else {
-      loadedCells = newPuzzle();
+      loadedCells = newPuzzle(props.selectedDifficulty);
     }
 
     setGameData(loadedCells);    
@@ -47,13 +55,13 @@ watch(input, (newInput) => {
   if (newInput === solution.value) {
     completed.value = true;
     if (confirm('Congratulation! Start a new game?')) {
-      setGameData(newPuzzle());
+      setGameData(newPuzzle('easy'));
     };
   }
 });
 
-const newPuzzle = () => {
-    let newCells = sudokuService.generate();
+const newPuzzle = (difficulty: Difficulty) => {
+    let newCells = sudokuService.generate(difficulty);
     localStorageService.set('sudoku', JSON.stringify(newCells));
 
     return newCells;
@@ -90,14 +98,8 @@ const cellClickHandler = (index: number) => {
 }
 
 const resetHandler = () => {
-  if (confirm("Are you sure?") === true) {
+  if (confirm("All progress will be lost. Are you sure?") === true) {
     input.value = puzzle.value;
-  }
-}
-
-const newGameHandler = () => {
-  if (confirm("Are you sure?") === true) {
-    setGameData(newPuzzle());
   }
 }
 </script>
@@ -105,14 +107,17 @@ const newGameHandler = () => {
 <template>
   <div class="game">
     <template v-if="puzzle.length">
+      <div class="game-top">
+        <button type="button" class="action-item" @click="$emit('show-menu')">
+          Back to menu
+        </button>
+      </div>
+
       <SudokuGrid :grid="{ input, solution, puzzle }" :selectedNumber="selectedNumber" @cell-clicked="cellClickHandler" />
       <NumberPicker :input="input" @select-number="(n) => selectedNumber = n" />
 
       <button type="button" class="action-item" @click="resetHandler">
-        Reset puzzle
-      </button>
-      <button type="button" class="action-item" @click="newGameHandler">
-        New game
+        Reset
       </button>
     </template>
     <template v-else>
@@ -124,12 +129,5 @@ const newGameHandler = () => {
 </template>
 
 <style lang="scss">
-  .game {
-    width: 50vh;
-    margin: 0 auto;
-
-    @media (orientation: portrait) {
-      width: 50vw;
-    }
-  }
+  
 </style>

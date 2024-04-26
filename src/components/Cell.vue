@@ -1,7 +1,7 @@
 <template>
   <div
       class="cell"
-      :class="{ 'initial': initial, 'highlighted': selectedNumber === visualValue}"
+      :class="{ 'initial': initial, 'highlighted': highlighted}"
       @click="handleClick"
       >
     {{ visualValue }}
@@ -31,6 +31,10 @@ export default {
 
     visualValue() {
       return this.activeValue.replace('-', '')
+    },
+
+    highlighted() {
+      return this.selectedNumber === this.visualValue
     }
   },
 
@@ -41,37 +45,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.cell {
-  &:before {
-    content: "";
-    display: inline-block;
-    height: 100%;
-    vertical-align: middle;
-    font-size: 0;
-    letter-spacing: 0;
-    line-height: 0;
-  }
-
-  background-color: white;
-  font-family: 'Roboto', sans-serif;
-  font-size: 2.5vh;
-  font-weight: 300;
-  text-align: center;
-  vertical-align: middle;
-  user-select: none;
-
-  &.initial {
-    font-weight: 800;
-  }
-
-  &.highlighted {
-    background-color: #fcffc8!important;
-  }
-
-  @media (orientation: portrait) {
-    font-size: 2.5vw;
-  }
-}
-</style>

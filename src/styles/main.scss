@@ -1,0 +1,219 @@
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    min-height: 100%;
+    padding: 0;
+    margin: 0;
+    background-color: #eee;
+}
+
+#app {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+h1 {
+    display: block;
+    color: #111;
+    font-size: 38px;
+    line-height: 2em;
+    text-align: center;
+    border-bottom: 2px solid orange;
+    margin-bottom: 1em;
+}
+
+.main-menu {
+    width: 250px;
+    display: block;
+}
+
+.main-menu__item {
+    margin: 0 0 1em;
+    text-align: center;
+}
+
+.main-menu__item button {
+    display: block;
+    margin: 0 2em;
+    width: calc(100% - 4em);
+}
+
+button {
+    border: 1px solid rgb(170, 170, 170);
+    background-color: #eee;
+    color: #111;
+    padding: 8px 16px;
+    border-radius: 6px;
+}
+
+
+button:hover {
+    background-color: #e5e5e5;
+    border-color: #454545;
+}
+
+.center {
+    text-align: center;
+}
+
+.game {
+    width: 50vh;
+    margin: 0 auto;
+
+    @media (orientation: portrait) {
+        width: 50vw;
+    }
+}
+
+.game-top {
+    margin-bottom: 16px;
+}
+
+.game-bottom {
+    margin-top: 16px;
+}
+
+.grid {
+    width: 50vw;
+    height: 50vw;
+    background-color: #454545;
+    border: 1px solid #454545;
+    display: grid;
+    grid-gap: 1px;
+    grid-template-rows: repeat(9, 1fr);
+    grid-template-columns: repeat(9, 1fr);
+
+    // & .cell:nth-of-type(n+4):nth-of-type(-n+6),
+    // & .cell:nth-of-type(n+13):nth-of-type(-n+15),
+    // & .cell:nth-of-type(n+22):nth-of-type(-n+24),
+    // & .cell:nth-of-type(n+28):nth-of-type(-n+30),
+    // & .cell:nth-of-type(n+37):nth-of-type(-n+39),
+    // & .cell:nth-of-type(n+46):nth-of-type(-n+48),
+    // & .cell:nth-of-type(n+34):nth-of-type(-n+36),
+    // & .cell:nth-of-type(n+43):nth-of-type(-n+45),
+    // & .cell:nth-of-type(n+52):nth-of-type(-n+54),
+    // & .cell:nth-of-type(n+58):nth-of-type(-n+60),
+    // & .cell:nth-of-type(n+67):nth-of-type(-n+69),
+    // & .cell:nth-of-type(n+76):nth-of-type(-n+78) {
+    //     background-color: #eee;
+    // }
+
+    .cell:nth-child(3n):not(:nth-child(9n)) {
+        margin-right: 3px;
+    }
+
+    .cell:nth-child(27n + 28),
+    .cell:nth-child(27n + 29),
+    .cell:nth-child(27n + 30),
+    .cell:nth-child(27n + 31),
+    .cell:nth-child(27n + 32),
+    .cell:nth-child(27n + 33),
+    .cell:nth-child(27n + 34),
+    .cell:nth-child(27n + 35),
+    .cell:nth-child(27n + 36) {
+        margin-top: 3px;
+    }
+
+    @media (orientation: landscape) {
+        width: 50vh;
+        height: 50vh;
+    }
+}
+
+.cell {
+    &:before {
+        content: "";
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+        font-size: 0;
+        letter-spacing: 0;
+        line-height: 0;
+    }
+
+    background-color: white;
+    font-family: 'Roboto',
+    sans-serif;
+    font-size: 2.5vh;
+    font-weight: 300;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+
+    &.initial,
+    &:hover {
+        background-color: #fff1df;
+    }
+
+    &.highlighted {
+        background-color: #ffd6a0 !important;
+    }
+
+    @media (orientation: portrait) {
+        font-size: 2.5vw;
+    }
+}
+
+.number-picker {
+    width: 50vw;
+    height: 5.5555vw;
+    margin: 16px 0;
+    background-color: #454545;
+    border: 1px solid #454545;
+    display: grid;
+    grid-gap: 1px;
+    grid-template-rows: repeat(1, 1fr);
+    grid-template-columns: repeat(9, 1fr);
+
+    @media (orientation: landscape) {
+        width: 50vh;
+        height: 5.5555vh;
+        margin-top: 2.5vh;
+    }
+}
+
+.number {
+    &:before {
+        content: "";
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+        font-size: 0;
+        letter-spacing: 0;
+        line-height: 0;
+    }
+
+    background-color: #fff;
+    color: black;
+    font-family: 'Roboto',
+    sans-serif;
+    font-size: 2.5vh;
+    font-weight: 300;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+
+    @media (orientation: portrait) {
+        font-size: 2.5vw;
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    &.active {
+        color: black;
+        background-color: #ffd6a0;
+    }
+
+    &.completed {
+        color: #acacac;
+        background-color: #e0e0e0;
+        font-style: italic;
+    }
+}
