@@ -7,6 +7,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "material-symbols": "^0.17.3",
     "ramda": "^0.29.1",
     "sudoku-gen": "^1.0.2",
     "vue": "^3.4.21"
