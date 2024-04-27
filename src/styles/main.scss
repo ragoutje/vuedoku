@@ -81,7 +81,7 @@ button {
 .main-menu {
     width: 250px;
     display: block;
-    
+
     button {
         display: block;
         margin: 0 2em;
@@ -97,10 +97,14 @@ button {
         width: 24px;
         height: 24px;
 
-        &:hover {
-            cursor: pointer;
+        & span {
             user-select: none;
+
+            &:hover {
+                cursor: pointer;
+            }
         }
+
     }
 
 
@@ -122,74 +126,95 @@ button+button {
 }
 
 .grid {
-    width: 50vw;
-    height: 50vw;
-    background-color: #454545;
-    border: 1px solid #454545;
+    margin: 0 auto;
+    width: 600px;
+    height: 600px;
     display: grid;
-    grid-gap: 1px;
+    grid-gap: 0;
     grid-template-rows: repeat(9, 1fr);
     grid-template-columns: repeat(9, 1fr);
 
-    .cell:nth-child(3n):not(:nth-child(9n)) {
-        margin-right: 3px;
-    }
-
-    .cell:nth-child(27n + 28),
-    .cell:nth-child(27n + 29),
-    .cell:nth-child(27n + 30),
-    .cell:nth-child(27n + 31),
-    .cell:nth-child(27n + 32),
-    .cell:nth-child(27n + 33),
-    .cell:nth-child(27n + 34),
-    .cell:nth-child(27n + 35),
-    .cell:nth-child(27n + 36) {
-        margin-top: 3px;
-    }
-}
-
-.cell {
-    &:before {
-        content: "";
-        display: inline-block;
-        height: 100%;
+    .cell {
+        position: relative;
+        background-color: white;
+        text-align: center;
         vertical-align: middle;
-        font-size: 0;
-        letter-spacing: 0;
-        line-height: 0;
+        user-select: none;
+        font-size: 24px;
+        border: 1px solid #454545;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &.initial,
+        &.initial:hover {
+            background-color: #eee;
+        }
+
+        &:hover {
+            background-color: #fff1df;
+        }
+
+        &.highlighted {
+            background-color: #ffd6a0 !important;
+        }
+
+        &.error {
+            background-color: red !important;
+            color: white !important;
+        }
+
+        &:nth-child(1) {
+            border-top-left-radius: 16px;
+        }
+
+        &:nth-child(9) {
+            border-top-right-radius: 16px;
+        }
+
+        &:nth-child(73) {
+            border-bottom-left-radius: 16px;
+        }
+
+        &:nth-child(81) {
+            border-bottom-right-radius: 16px;
+        }
     }
 
-    position: relative;
-    background-color: white;
-    text-align: center;
-    vertical-align: middle;
-    user-select: none;
-
-    &.initial,
-    &:hover {
-        background-color: #fff1df;
+    // Inner left/right border
+    .cell:nth-child(3n):not(:nth-child(9n)) {
+        border-right-width: 3px;
     }
 
-    &.highlighted {
-        background-color: #ffd6a0 !important;
+    // Inner top border
+    .cell:nth-child(n+19):nth-child(-n+27) {
+        border-bottom-width: 3px;
     }
 
-    &.error {
-        background-color: red!important;
-        color: white!important;
+    // Inner bottom border
+    .cell:nth-child(n+46):nth-child(-n+54) {
+        border-bottom-width: 3px;
     }
 }
 
 .notes {
-    position: absolute;
-    z-index: 10;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
     display: grid;
-    grid-gap: 0;
+    width: 100%;
+    height: 100%;
+    grid-gap: 1px;
     grid-template-rows: repeat(3, 1fr);
     grid-template-columns: repeat(3, 1fr);
     font-size: 14px;
+    line-height: 1em;
+
+    &__cell {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+
+        &.highlighted {
+            background-color: #ffd6a0;
+        }
+    }
 }

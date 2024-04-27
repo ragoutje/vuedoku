@@ -1,15 +1,24 @@
 <script lang="ts" setup>
 import { Ref, onBeforeMount, ref, watch } from 'vue';
+import { Difficulty } from 'sudoku-gen/dist/types/difficulty.type';
 import * as localStorageService from './services/LocalStorageService';
 import GameContainer from './components/GameContainer.vue'
-import { Difficulty } from 'sudoku-gen/dist/types/difficulty.type';
+import HorizontalSelect from './components/HorizontalSelect.vue';
 
+/* Consts */
+const difficulties: Array<Difficulty> = ['easy', 'medium', 'hard', 'expert'];
+
+/* Refs */
 const isLoading = ref(true);
 const showMenu = ref(true);
 const hasPreviousGame = ref(false);
-const previousDifficulty = ref('');
-const selectedDifficulty: Ref<Difficulty> = ref('easy'); // 'easy', 'medium', 'hard', 'expert'
+const selectedDifficulty: Ref<Difficulty> = ref('medium');
 
+/* Events */
+watch(selectedDifficulty, (newVal) => localStorageService.set('selectedDifficulty', newVal));
+
+
+/* Lifecycle */
 onBeforeMount(() => {
   checkForPreviousGame();
   checkForPreviousDifficulty();
@@ -19,18 +28,16 @@ onBeforeMount(() => {
   }, 250);
 });
 
-watch(selectedDifficulty, (newVal) => localStorageService.set('selectedDifficulty', newVal));
-
-const checkForPreviousGame = () => {
+/* Methods */
+const checkForPreviousGame = (): void => {
   const storedGame = localStorageService.get('sudoku');
 
   if (storedGame && JSON.parse(storedGame)?.input?.length) {
-    previousDifficulty.value = JSON.parse(storedGame).difficulty;
     hasPreviousGame.value = true;
   }
 }
 
-const checkForPreviousDifficulty = () => {
+const checkForPreviousDifficulty = (): void => {
   const storedDifficulty = localStorageService.get('selectedDifficulty');
 
   if (storedDifficulty && storedDifficulty.length) {
@@ -39,67 +46,44 @@ const checkForPreviousDifficulty = () => {
   }
 }
 
-const newGameHandler = () => {
+const newGameHandler = (): void => {
   if (hasPreviousGame.value) {
     if (confirm("You haven't finished your previous puzzle. Start a new one?") === true) {
       localStorageService.clear();
+      localStorageService.set('selectedDifficulty', selectedDifficulty.value);
+
     } else {
       return;
     }
   }
 
-  showMenu.value = false;
+  menuHandler(false);
 }
 
-const continueHandler = () => {
-  showMenu.value = false;
-}
+const menuHandler = (newVal: boolean): void => {
+  showMenu.value = newVal;
 
-const showMenuHandler = () => {
-  showMenu.value = true;
-}
-
-const prevDifficultyHandler = () => {
-  if (selectedDifficulty.value === 'expert') {
-    selectedDifficulty.value = 'hard'
-  } else if (selectedDifficulty.value === 'hard') {
-    selectedDifficulty.value = 'medium'
-  } else if (selectedDifficulty.value === 'medium') {
-    selectedDifficulty.value = 'easy'
-  }
-}
-const nextDifficultyHandler = () => {
-  if (selectedDifficulty.value === 'easy') {
-    selectedDifficulty.value = 'medium'
-  } else if (selectedDifficulty.value === 'medium') {
-    selectedDifficulty.value = 'hard'
-  } else if (selectedDifficulty.value === 'hard') {
-    selectedDifficulty.value = 'expert'
+  if (showMenu.value) {
+    checkForPreviousDifficulty();
+    checkForPreviousGame();
   }
 }
 </script>
 
 <template>
   <template v-if="isLoading">
-    <div class="center">
-        <strong>Loading Vuedoku...</strong>
-      </div>
+    <strong>Loading Vuedoku...</strong>
   </template>
+
   <template v-else>
+
     <template v-if="showMenu">
       <div class="main-menu">
         <h1>Vuedoku</h1>
 
         <div class="content-block center">
-          <div class="horizontal-select">
-            <div class="horizontal-select__button" @click="prevDifficultyHandler">
-              <span v-if="selectedDifficulty !== 'easy'" class="material-symbols-outlined">chevron_left</span>
-            </div>
-            <div class="horizontal-select__label">{{ selectedDifficulty }}</div>
-            <div class="horizontal-select__button" @click="nextDifficultyHandler">
-              <span v-if="selectedDifficulty !== 'expert'" class="material-symbols-outlined">chevron_right</span>
-            </div>
-          </div>
+          <HorizontalSelect :values="difficulties" :selected="difficulties.indexOf(selectedDifficulty)"
+            @change-selected="(newVal) => selectedDifficulty = difficulties[newVal]" />
         </div>
 
         <div class="content-block">
@@ -107,12 +91,14 @@ const nextDifficultyHandler = () => {
         </div>
 
         <div v-if="hasPreviousGame" class="content-block">
-          <button @click="continueHandler">Resume</button>
+          <button @click="menuHandler(false)">Resume</button>
         </div>
       </div>
     </template>
+
     <template v-else>
-      <GameContainer :selected-difficulty="selectedDifficulty" @show-menu="showMenuHandler" />
+      <GameContainer :selected-difficulty="selectedDifficulty" @show-menu="menuHandler(true)" />
     </template>
+
   </template>
 </template>
