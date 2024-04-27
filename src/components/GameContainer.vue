@@ -122,7 +122,11 @@ const cellClickHandler = (index: number) => {
     newInput = selectedNumber.value;
   }
 
+  // Set a new value
   setInputValue(index, newInput);
+
+  // Clean up notes
+  cleanUpNotes(index, newInput);
 }
 
 const resetHandler = () => {
@@ -149,11 +153,11 @@ const resetHandler = () => {
   }
 }
 
-const numberClick = (newVal: string) => {
+const numberClick = (newVal: string): void => {
   selectedNumber.value = selectedNumber.value === newVal ? '-' : newVal;
 }
 
-const hintHandler = () => {
+const hintHandler = (): void => {
   let indices = [];
 
   for (var i = 0; i < input.value.length; i++) {
@@ -169,10 +173,27 @@ const validateCell = (solutionValue: string, inputValue: string): boolean => {
   return solutionValue === inputValue;
 }
 
-const setInputValue = (index: number, newVal: string) => {
+const setInputValue = (index: number, newVal: string): void => {
   let newInputList = input.value.split('');
   newInputList[index] = newVal;
   input.value = newInputList.join('');
+}
+
+const cleanUpNotes = (index: number, newVal: string): void => {
+  // listIndex: cellIndex
+  const indices: number[] = [];
+
+  indices.push(index);
+
+  // Find all cells in the same column (above and below) and in the same row (left and right) and add index to list
+
+  // For all indices in the list set all
+  // notes with the same value as
+  // the new input value to false
+  for (let i = 0; i < indices.length; i++) {
+    // notes.[0-80].[1-9]
+    notes.value[indices[i]][newVal] = false;
+  }
 }
 </script>
 
@@ -191,6 +212,18 @@ const setInputValue = (index: number, newVal: string) => {
       </div>
 
       <div class="content-block">
+        <button type="button" :class="{ 'active': takingNotes }" @click="takingNotes = !takingNotes">
+          <span class="material-symbols-outlined">edit</span>
+        </button>
+
+        <button type="button" v-for="nr in '123456789'" :key="`number-picker-${nr}`"
+          :class="{ 'active': selectedNumber === nr, 'completed': (input.split(nr).length - 1) === 9 }"
+          @click="numberClick(nr)">
+          {{ nr }}
+        </button>
+      </div>
+
+      <div>
         <button type="button" @click="$emit('show-menu')" title="Return to menu">
           <span class="material-symbols-outlined">home</span>
         </button>
@@ -205,16 +238,6 @@ const setInputValue = (index: number, newVal: string) => {
 
         <button type="button" @click="hintHandler" title="Hint">
           <span class="material-symbols-outlined">lightbulb</span>
-        </button>
-
-        <button type="button" :class="{ 'active': takingNotes }" @click="takingNotes = !takingNotes">
-          <span class="material-symbols-outlined">edit</span>
-        </button>
-
-        <button type="button" v-for="nr in '123456789'" :key="`number-picker-${nr}`"
-          :class="{ 'number': true, 'active': selectedNumber === nr, 'completed': (input.split(nr).length - 1) === 9 }"
-          @click="numberClick(nr)">
-          {{ nr }}
         </button>
       </div>
     </template>

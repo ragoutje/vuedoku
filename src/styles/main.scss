@@ -49,13 +49,14 @@ button {
 
     &:hover {
         cursor: pointer;
-        background-color: #e5e5e5;
-        border-color: #454545;
+        background-color: rgb(255, 233, 216);
+        border-color: rgb(170, 170, 170);
     }
 
-    &.active {
+    &.active, &:active {
         color: black;
-        background-color: #ffd6a0;
+        background-color: rgb(255, 189, 135);
+        border-color: #333;
     }
 
     &.completed {
@@ -121,10 +122,6 @@ button+button {
     margin-left: 8px;
 }
 
-.game-bottom {
-    margin-top: 16px;
-}
-
 .grid {
     margin: 0 auto;
     width: 600px;
@@ -145,6 +142,8 @@ button+button {
         display: flex;
         align-items: center;
         justify-content: center;
+        transition: all 250ms ease-out;
+        overflow: hidden;
 
         &.initial,
         &.initial:hover {
@@ -152,15 +151,16 @@ button+button {
         }
 
         &:hover {
-            background-color: #fff1df;
+            background-color: rgb(255, 233, 216);
         }
 
         &.highlighted {
-            background-color: #ffd6a0 !important;
+            background-color: rgb(255, 189, 135) !important;
         }
 
         &.error {
-            background-color: red !important;
+            transition: all 0s linear;
+            background-color: rgb(255, 60, 0) !important;
             color: white !important;
         }
 
@@ -212,9 +212,11 @@ button+button {
         align-items: center;
         justify-content: center;
         border-radius: 50%;
+        transition: all 250ms ease-out;
+        background-color: transparent;
 
         &.highlighted {
-            background-color: #ffd6a0;
+            background-color: rgb(255, 189, 135);
         }
     }
 }
