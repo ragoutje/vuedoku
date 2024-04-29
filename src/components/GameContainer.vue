@@ -179,19 +179,36 @@ const setInputValue = (index: number, newVal: string): void => {
   input.value = newInputList.join('');
 }
 
-const cleanUpNotes = (index: number, newVal: string): void => {
-  // listIndex: cellIndex
-  const indices: number[] = [];
+const getRow = (i: number): number => Math.floor(i / 9);
+const getCol = (i: number): number => i % 9;
+const getCell = (rowOrCol: number): number => Math.floor(rowOrCol / 3);
 
+const cleanUpNotes = (index: number, newVal: string): void => {
+  const indices: number[] = [];
   indices.push(index);
 
-  // Find all cells in the same column (above and below) and in the same row (left and right) and add index to list
+  const row = getRow(index);
+  const col = getCol(index);
+  const rowCell = getCell(row);
+  const colCell = getCell(col);
 
-  // For all indices in the list set all
-  // notes with the same value as
-  // the new input value to false
+
+  unref(notes).forEach((_el: CellNotes, i: number) => {
+    const notesRow = getRow(i);
+    const notesCol = getCol(i) 
+    const notesRowCell = getCell(notesRow);
+    const notesColCell = getCell(notesCol);
+
+    if (
+      (notesRowCell === rowCell && notesColCell === colCell) // Part of the same 9x9 cell
+      || notesRow === row // same row
+      || notesCol === col // same col
+    ) {
+        indices.push(i);
+    }
+  });
+  // Set false all notes with the same value as newValue
   for (let i = 0; i < indices.length; i++) {
-    // notes.[0-80].[1-9]
     notes.value[indices[i]][newVal] = false;
   }
 }
@@ -212,7 +229,7 @@ const cleanUpNotes = (index: number, newVal: string): void => {
       </div>
 
       <div class="content-block">
-        <button type="button" :class="{ 'active': takingNotes }" @click="takingNotes = !takingNotes">
+        <button type="button" :class="{ 'active': takingNotes }" @click="takingNotes = !takingNotes" :title="!takingNotes ? 'Switch to notes' : 'Switch to numbers'">
           <span class="material-symbols-outlined">edit</span>
         </button>
 
