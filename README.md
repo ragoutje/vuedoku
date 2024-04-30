@@ -16,7 +16,5 @@ npm run dev
 ```
 
 ## Wishlist
-- Responsive/mobile
-- Undo step
-- Theming with CSS variables
+- Theming with CSS variables (a.o. light/dark mode)
 - Refactor to smaller/less complex components

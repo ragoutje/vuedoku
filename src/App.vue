@@ -79,7 +79,9 @@ const menuHandler = (newVal: boolean): void => {
 
     <template v-if="showMenu">
       <div class="main-menu">
-        <h1>Vuedoku</h1>
+        <div class="content-block"> 
+          <h1>Vuedoku</h1>
+        </div>
 
         <div class="content-block center">
           <HorizontalSelect :values="difficulties" :selected="difficulties.indexOf(selectedDifficulty)"

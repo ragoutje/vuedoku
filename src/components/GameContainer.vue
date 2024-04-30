@@ -215,7 +215,7 @@ const cleanUpNotes = (index: number, newVal: string): void => {
 </script>
 
 <template>
-  <div>
+  <div class="game-container">
     <template v-if="puzzle.length">
       <div class="content-block">
         <h1>Vuedoku <small>({{ difficulty }})</small></h1>
@@ -229,18 +229,20 @@ const cleanUpNotes = (index: number, newVal: string): void => {
       </div>
 
       <div class="content-block">
-        <button type="button" :class="{ 'active': takingNotes }" @click="takingNotes = !takingNotes" :title="!takingNotes ? 'Switch to notes' : 'Switch to numbers'">
-          <span class="material-symbols-outlined">edit</span>
-        </button>
+        <div class="number-picker">
+          <button type="button" v-for="nr in '123456789'" :key="`number-picker-${nr}`"
+            :class="{ 'active': selectedNumber === nr, 'completed': (input.split(nr).length - 1) === 9, 'note': takingNotes }"
+            @click="numberClick(nr)">
+            {{ nr }}
+          </button>
 
-        <button type="button" v-for="nr in '123456789'" :key="`number-picker-${nr}`"
-          :class="{ 'active': selectedNumber === nr, 'completed': (input.split(nr).length - 1) === 9 }"
-          @click="numberClick(nr)">
-          {{ nr }}
-        </button>
+          <button type="button" :class="{ 'active': takingNotes }" @click="takingNotes = !takingNotes" :title="!takingNotes ? 'Switch to notes' : 'Switch to numbers'">
+            <span class="material-symbols-outlined">edit</span>
+          </button>
+        </div>
       </div>
 
-      <div>
+      <div class="content-block bottom-menu">
         <button type="button" @click="$emit('show-menu')" title="Return to menu">
           <span class="material-symbols-outlined">home</span>
         </button>

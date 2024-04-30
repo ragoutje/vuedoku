@@ -36,7 +36,7 @@ h1 {
 button {
     display: inline-block;
     height: 42px;
-    border: 1px solid rgb(170, 170, 170);
+    border: 1px solid rgb(143, 143, 143);
     background-color: white;
     color: #111;
     padding: 8px 16px;
@@ -56,13 +56,12 @@ button {
     &.active, &:active {
         color: black;
         background-color: rgb(255, 189, 135);
-        border-color: #333;
+        border-color: #454545;
     }
 
     &.completed {
         color: #acacac;
         background-color: #e0e0e0;
-        font-style: italic;
     }
 }
 
@@ -122,6 +121,10 @@ button+button {
     margin-left: 8px;
 }
 
+.game-container {
+    display: block;
+}
+
 .grid {
     margin: 0 auto;
     width: 600px;
@@ -147,7 +150,7 @@ button+button {
 
         &.initial,
         &.initial:hover {
-            background-color: #eee;
+            background-color: #e2e2e2;
         }
 
         &:hover {
@@ -206,6 +209,7 @@ button+button {
     grid-template-columns: repeat(3, 1fr);
     font-size: 14px;
     line-height: 1em;
+    font-style: italic;
 
     &__cell {
         display: flex;
@@ -217,6 +221,67 @@ button+button {
 
         &.highlighted {
             background-color: rgb(255, 189, 135);
+        }
+    }
+}
+
+.number-picker {
+    .note {
+        font-style: italic;
+    }
+}
+
+@media (orientation: portrait) {
+    .main-menu {
+        width: 100%;
+    }
+
+    .content-block {
+        max-width: 100%;
+        padding: 0 16px;
+    }
+
+    .game-container {
+        width: 100%;
+    }
+
+    .grid {
+        width: auto;
+        height: auto;
+        aspect-ratio: 1 / 1;
+    }
+
+    .notes {
+        font-size: 12px;
+
+        &__cell {
+            border-radius: 4px;
+        }
+    }
+
+    .number-picker {
+        display: grid;
+        width: 100%;
+        grid-gap: 16px;
+        grid-template-rows: repeat(2, 1fr);
+        grid-template-columns: repeat(5, 1fr);
+
+        button {
+            margin: 0;
+            font-size: 18px;
+
+            &.note {
+                font-size: 12px;
+            }
+        }
+    }
+
+    .bottom-menu {
+        display: flex;
+
+        button {
+            flex: 1 1 0px;
+            font-size: 18px;
         }
     }
 }
