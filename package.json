@@ -2,19 +2,15 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
-    "serve": "vite preview",
-    "test": "jest"
+    "build": "vue-tsc --noEmit && vite build"
   },
   "dependencies": {
     "material-symbols": "^0.17.3",
-    "ramda": "^0.29.1",
     "sudoku-gen": "^1.0.2",
     "vue": "^3.4.21"
   },
   "devDependencies": {
     "@babel/types": "^7.24.5",
-    "@types/ramda": "^0.29.12",
     "@vitejs/plugin-vue": "^5.0.4",
     "@vue/test-utils": "^2.4.5",
     "sass": "^1.74.1",

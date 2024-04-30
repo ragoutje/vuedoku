@@ -15,7 +15,6 @@
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.tsx",
-    "src/**/*.vue",
-    "../../../AppData/Local/JetBrains/WebStorm2021.1/javascript/typings/jest/26.0.23/node_modules/@types/jest/index.d.ts"
+    "src/**/*.vue"
   ]
 }
