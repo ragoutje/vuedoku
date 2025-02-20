@@ -1,0 +1,1 @@
+export declare type ColorMode = 'auto' | 'light' | 'dark';

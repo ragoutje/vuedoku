@@ -16,5 +16,7 @@ npm run dev
 ```
 
 ## Wishlist
-- Theming with CSS variables (a.o. light/dark mode)
-- Refactor to smaller/less complex components
+- Linting & prettier
+- Unit tests
+- Clean up VueJS code
+- Touchscreen mode

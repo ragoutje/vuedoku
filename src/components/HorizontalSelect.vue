@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 
 /* Interface declarations */
-const { selected, values } = defineProps(['selected', 'values']);
+const { selected, values, labels } = defineProps(['selected', 'values', 'labels']);
 const emit = defineEmits(['change-selected']);
 
 /* Internal state */
@@ -25,7 +25,7 @@ const nextHandler = (): void => {
         <div class="horizontal-select__button">
             <span v-if="current !== 0" class="material-symbols-outlined" @click="prevHandler">chevron_left</span>
         </div>
-        <div class="horizontal-select__label">{{ values[current] }}</div>
+        <div class="horizontal-select__label">{{ labels[values[current]] }}</div>
         <div class="horizontal-select__button">
             <span v-if="current !== values.length - 1" class="material-symbols-outlined"
                 @click="nextHandler">chevron_right</span>

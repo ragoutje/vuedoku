@@ -9,12 +9,12 @@
 
     &__cell {
         position: relative;
-        background-color: white;
+        background-color: var(--sudoku-cell-background-color);
         text-align: center;
         vertical-align: middle;
         user-select: none;
         font-size: 24px;
-        border: 1px solid #454545;
+        border: 1px solid var(--sudoku-cell-border-color);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -23,21 +23,21 @@
 
         &--initial,
         &--initial:hover {
-            background-color: #e2e2e2;
+            background-color: var(--sudoku-cell-initial-background-color);
         }
 
         &:hover {
-            background-color: rgb(255, 233, 216);
+            background-color: var(--sudoku-cell-hover-background-color);
         }
 
         &--highlighted {
-            background-color: rgb(255, 189, 135) !important;
+            background-color: var(--sudoku-cell-highlighted-background-color) !important;
         }
 
         &--error {
             transition: all 0s linear;
-            background-color: rgb(255, 60, 0) !important;
-            color: white !important;
+            background-color: var(--sudoku-cell-error-background-color) !important;
+            color: var(--sudoku-cell-error-font-color) !important;
         }
 
         &:nth-child(1) {
@@ -55,21 +55,21 @@
         &:nth-child(81) {
             border-bottom-right-radius: 16px;
         }
-    }
 
-    // Inner left/right border
-    .cell:nth-child(3n):not(:nth-child(9n)) {
-        border-right-width: 3px;
-    }
-
-    // Inner top border
-    .cell:nth-child(n+19):nth-child(-n+27) {
-        border-bottom-width: 3px;
-    }
-
-    // Inner bottom border
-    .cell:nth-child(n+46):nth-child(-n+54) {
-        border-bottom-width: 3px;
+        // Inner left/right border
+        &:nth-child(3n):not(:nth-child(9n)) {
+            border-right-width: 3px;
+        }
+    
+        // Inner top border
+        &:nth-child(n+19):nth-child(-n+27) {
+            border-bottom-width: 3px;
+        }
+    
+        // Inner bottom border
+        &:nth-child(n+46):nth-child(-n+54) {
+            border-bottom-width: 3px;
+        }
     }
 }
 
@@ -93,7 +93,7 @@
         background-color: transparent;
 
         &--highlighted {
-            background-color: rgb(255, 189, 135);
+            background-color: var(--sudoku-cell-notes-highlighted-background-color);
         }
     }
 }
