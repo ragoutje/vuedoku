@@ -16,6 +16,5 @@ npm run dev
 ```
 
 ## Wishlist
-- Linting & prettier
 - Unit tests
 - Clean up VueJS code
