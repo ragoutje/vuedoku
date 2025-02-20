@@ -19,4 +19,3 @@ npm run dev
 - Linting & prettier
 - Unit tests
 - Clean up VueJS code
-- Touchscreen mode

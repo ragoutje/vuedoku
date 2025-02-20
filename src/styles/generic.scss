@@ -44,17 +44,26 @@ button {
     text-align: center;
     vertical-align: middle;
 
-    &:hover {
-        cursor: pointer;
-        background-color: var(--button-hover-background-color);
-        border-color: var(--button-hover-border-color);
+    @media (pointer: fine) {
+        &:hover {
+            cursor: pointer;
+            background-color: var(--button-hover-background-color);
+            border-color: var(--button-hover-border-color);
+        }
+    
+        &:active {
+            color: var(--button-active-font-color);
+            background-color: var(--button-active-background-color);
+            border-color: var(--button-active-border-color);
+        }
     }
 
-    &.active, &:active {
+    &.active {
         color: var(--button-active-font-color);
         background-color: var(--button-active-background-color);
         border-color: var(--button-active-border-color);
     }
+
 
     &.completed {
         color: var(--button-completed-font-color);
@@ -93,13 +102,13 @@ button {
         & span {
             user-select: none;
 
-            &:hover {
-                cursor: pointer;
+            @media (pointer: fine) {
+                &:hover {
+                    cursor: pointer;
+                }
             }
         }
-
     }
-
 
     &__label {
         flex-grow: 4;
@@ -113,8 +122,6 @@ button {
 button+button {
     margin-left: 8px;
 }
-
-
 
 .number-picker {
     .note {

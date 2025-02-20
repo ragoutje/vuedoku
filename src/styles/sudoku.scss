@@ -21,17 +21,26 @@
         transition: all 250ms ease-out;
         overflow: hidden;
 
-        &--initial,
-        &--initial:hover {
+        &--initial {
             background-color: var(--sudoku-cell-initial-background-color);
+            color: var(--sudoku-cell-initial-color);
+            font-weight: var(--sudoku-cell-initial-font-weight);
         }
+        
+        @media (pointer: fine) {
+            &--initial:hover {
+                background-color: var(--sudoku-cell-initial-background-color);
+                font-weight: var(--sudoku-cell-initial-font-weight);
+            }
 
-        &:hover {
-            background-color: var(--sudoku-cell-hover-background-color);
+            &:hover {
+                background-color: var(--sudoku-cell-hover-background-color);
+            }
         }
 
         &--highlighted {
             background-color: var(--sudoku-cell-highlighted-background-color) !important;
+            color: var(--sudoku-cell-highlighted-color);
         }
 
         &--error {

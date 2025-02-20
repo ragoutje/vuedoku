@@ -39,13 +39,19 @@
     --sudoku-cell-border-color-dark: rgb(187, 187, 187);
 
     --sudoku-cell-initial-background-color: #e2e2e2;
-    --sudoku-cell-initial-background-color-dark: rgb(71, 71, 71);
+    --sudoku-cell-initial-background-color-dark: rgb(56, 56, 56);
+    --sudoku-cell-initial-color: inherit;
+    --sudoku-cell-initial-color-dark: var(--brand-primary-color);
+    --sudoku-cell-initial-font-weight: inherit;
+    --sudoku-cell-initial-font-weight-dark: bold;
 
     --sudoku-cell-hover-background-color: rgb(255, 233, 216);
     --sudoku-cell-hover-background-color-dark: rgba(var(--brand-primary-color-raw), 50%);
 
     --sudoku-cell-highlighted-background-color: rgb(255, 189, 135);
     --sudoku-cell-highlighted-background-color-dark: rgba(var(--brand-primary-color-raw), 80%);
+    --sudoku-cell-highlighted-color: inherit;
+    --sudoku-cell-highlighted-color-dark: rgb(255, 255, 255);
 
     --sudoku-cell-error-background-color: rgb(255, 60, 0);
     --sudoku-cell-error-background-color-dark: rgb(255, 60, 0);
@@ -90,6 +96,9 @@
     --sudoku-cell-border-color: var(--sudoku-cell-border-color-dark);
 
     --sudoku-cell-initial-background-color: var(--sudoku-cell-initial-background-color-dark);
+    --sudoku-cell-initial-color: var(--sudoku-cell-initial-color-dark);
+    --sudoku-cell-initial-font-weight: var(--sudoku-cell-initial-font-weight-dark);
+
     --sudoku-cell-hover-background-color: var(--sudoku-cell-hover-background-color-dark);
     --sudoku-cell-highlighted-background-color: var(--sudoku-cell-highlighted-background-color-dark);
 
