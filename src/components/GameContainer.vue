@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { onBeforeMount, onMounted, ref, unref, watch, defineEmits, Ref } from "vue";
-import Cell from "./Cell.vue";
+import SudokuCell from "./SudokuCell.vue";
 import * as sudokuService from "../services/SudokuService";
 import * as localStorageService from "../services/LocalStorageService";
 import { Difficulty } from "sudoku-gen/dist/types/difficulty.type";
@@ -18,7 +18,7 @@ const takingNotes = ref(false);
 const validate = ref(false);
 
 const props = defineProps<{selectedDifficulty: Difficulty}>();
-const emit = defineEmits(['show-menu', 'selectNumber']);
+defineEmits(['show-menu', 'selectNumber']);
 
 onBeforeMount(() => {
   setTimeout(() => {
@@ -26,8 +26,12 @@ onBeforeMount(() => {
     const storedSudoku = localStorageService.get('sudoku');
     const storedSelectedNumber = localStorageService.get('selectedNumber');
 
+    // eslint-disable-next-line prefer-const
     loadedCells = storedSudoku?.length ? JSON.parse(storedSudoku) : newPuzzle(props.selectedDifficulty);
-    setGameData(loadedCells);
+
+    if (loadedCells !== undefined) {
+      setGameData(loadedCells);
+    }
 
     if (storedSelectedNumber?.length) selectedNumber.value = storedSelectedNumber;
   }, 250);
@@ -71,14 +75,14 @@ const storeSudoku = () => {
   }));
 }
 
-const newPuzzle = (difficulty: Difficulty) => {
-  let newCells = sudokuService.generate(difficulty);
+const newPuzzle = (difficulty: Difficulty): SudokuGrid => {
+  const newCells = sudokuService.generate(difficulty);
   localStorageService.set('sudoku', JSON.stringify(newCells));
 
   return newCells;
 }
 
-const setGameData = (newCells: any) => {
+const setGameData = (newCells: SudokuGrid) => {
   puzzle.value = newCells.puzzle;
   solution.value = newCells.solution;
   input.value = newCells.input;
@@ -125,7 +129,7 @@ const resetHandler = () => {
     selectedNumber.value = '-';
     validate.value = false;
 
-    let notesArr: CellNotes[] = [];
+    const notesArr: CellNotes[] = [];
     for (let i = 0; i < 81; i++) {
       notesArr[i] = {
         1: false,
@@ -148,9 +152,9 @@ const numberClick = (newVal: string): void => {
 }
 
 const hintHandler = (): void => {
-  let indices = [];
+  const indices = [];
 
-  for (var i = 0; i < input.value.length; i++) {
+  for (let i = 0; i < input.value.length; i++) {
       if (input.value[i] === "-") indices.push(i);
   }
 
@@ -164,7 +168,7 @@ const validateCell = (solutionValue: string, inputValue: string): boolean => {
 }
 
 const setInputValue = (index: number, newVal: string): void => {
-  let newInputList = input.value.split('');
+  const newInputList = input.value.split('');
   newInputList[index] = newVal;
   input.value = newInputList.join('');
 }
@@ -212,40 +216,42 @@ const cleanUpNotes = (index: number, newVal: string): void => {
       </div>
       <div class="content-block">
         <div class="sudoku">
-          <Cell v-for="(value, i) in input" :key="`cell-${i}`" :index="i" :puzzleValue="puzzle[i]" :inputValue="value"
-            :notes="notes[i]" :selectedNumber="selectedNumber" :isValid="validateCell(solution[i], input[i])"
+          <SudokuCell
+v-for="(value, i) in input" :key="`cell-${i}`" :index="i" :puzzle-value="puzzle[i]" :input-value="value"
+            :notes="notes[i]" :selected-number="selectedNumber" :is-valid="validateCell(solution[i], input[i])"
             @click="cellClickHandler(i)" />
         </div>
       </div>
 
       <div class="content-block">
         <div class="number-picker">
-          <button type="button" v-for="nr in '123456789'" :key="`number-picker-${nr}`"
+          <button
+v-for="nr in '123456789'" :key="`number-picker-${nr}`" type="button"
             :class="{ 'active': selectedNumber === nr, 'completed': (input.split(nr).length - 1) === 9, 'note': takingNotes }"
             @click="numberClick(nr)">
             {{ nr }}
           </button>
 
-          <button type="button" :class="{ 'active': takingNotes }" @click="takingNotes = !takingNotes" :title="!takingNotes ? 'Switch to notes' : 'Switch to numbers'">
+          <button type="button" :class="{ 'active': takingNotes }" :title="!takingNotes ? 'Switch to notes' : 'Switch to numbers'" @click="takingNotes = !takingNotes">
             <span class="material-symbols-outlined">edit</span>
           </button>
         </div>
       </div>
 
       <div class="content-block bottom-menu">
-        <button type="button" @click="$emit('show-menu')" title="Return to menu">
+        <button type="button" title="Return to menu" @click="$emit('show-menu')">
           <span class="material-symbols-outlined">home</span>
         </button>
 
-        <button type="button" @click="resetHandler" title="Reset puzzle">
+        <button type="button" title="Reset puzzle" @click="resetHandler">
           <span class="material-symbols-outlined">refresh</span>
         </button>
 
-        <button type="button" @click="validate = !validate" title="Validate puzzle" :class="{ 'active': validate }">
+        <button type="button" title="Validate puzzle" :class="{ 'active': validate }" @click="validate = !validate">
           <span class="material-symbols-outlined">check_circle</span>
         </button>
 
-        <button type="button" @click="hintHandler" title="Hint">
+        <button type="button" title="Hint" @click="hintHandler">
           <span class="material-symbols-outlined">lightbulb</span>
         </button>
       </div>

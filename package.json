@@ -2,7 +2,11 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build"
+    "build": "vue-tsc --noEmit && vite build",
+    "lint": "eslint src",
+    "lint:fix": "npm run lint -- --fix",
+    "lint-staged": "lint-staged",
+    "prepare": "husky"
   },
   "dependencies": {
     "material-symbols": "^0.17.3",
@@ -13,8 +17,17 @@
     "@babel/types": "^7.24.5",
     "@vitejs/plugin-vue": "^5.0.4",
     "@vue/test-utils": "^2.4.5",
+    "eslint": "^9.20.1",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "eslint-plugin-vue": "^9.32.0",
+    "globals": "^16.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.3",
+    "prettier": "^3.5.1",
     "sass": "^1.74.1",
     "typescript": "^5.4.4",
+    "typescript-eslint": "^8.24.1",
     "vite": "^5.2.10",
     "vitest": "^1.4.0",
     "vue-tsc": "^2.0.14"

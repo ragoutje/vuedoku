@@ -5,7 +5,7 @@ import { SudokuGrid } from "./SudokuService.types";
 export const generate = (difficulty: Difficulty = "easy"): SudokuGrid => {
     const newSudokuObj = getSudoku(difficulty);
 
-    let notesArr = [];
+    const notesArr = [];
 
     for (let i = 0; i < 81; i++) {
         notesArr[i] = {

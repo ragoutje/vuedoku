@@ -56,10 +56,10 @@ const checkForPreviousColorMode = (): void => {
 }
 
 const checkForPreviousDifficulty = (): void => {
-  const storedDifficulty = localStorageService.get('selectedDifficulty');
+  const storedDifficulty = localStorageService.get('selectedDifficulty') ?? 'medium';
 
   if (storedDifficulty && storedDifficulty.length) {
-    const diff: any = storedDifficulty;
+    const diff: Difficulty = storedDifficulty;
     selectedDifficulty.value = diff;
   }
 }
@@ -102,12 +102,14 @@ const menuHandler = (newVal: boolean): void => {
         </div>
 
         <div class="content-block center">
-          <HorizontalSelect :values="difficulties" :selected="difficulties.indexOf(selectedDifficulty)" :labels="difficultyLabels"
+          <HorizontalSelect
+:values="difficulties" :selected="difficulties.indexOf(selectedDifficulty)" :labels="difficultyLabels"
             @change-selected="(newVal) => selectedDifficulty = difficulties[newVal]" />
         </div>
 
         <div class="content-block center">
-          <HorizontalSelect :values="colorModes" :selected="colorModes.indexOf(selectedColorMode)" :labels="colorModeLabels"
+          <HorizontalSelect
+:values="colorModes" :selected="colorModes.indexOf(selectedColorMode)" :labels="colorModeLabels"
             @change-selected="(newVal) => selectedColorMode = colorModes[newVal]" />
         </div>
 
