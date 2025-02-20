@@ -29,13 +29,13 @@ const highlighted = computed(() => {
 </script>
 
 <template>
-  <div class="cell" :class="{ 'initial': initial, 'highlighted': highlighted, 'error': !isValid }">
+  <div class="sudoku__cell" :class="{ 'sudoku__cell--initial': initial, 'sudoku__cell--highlighted': highlighted, 'sudoku__cell--error': !isValid }">
     <template v-if="visualValue.length">
       {{ visualValue }}
     </template>
     <template v-else>
       <div class="notes">
-        <div v-for="nr in '123456789'" :key="`cell-${index}-note-${nr}`" class="notes__cell" :class="{'notes__cell': true, 'highlighted': notes[nr] && nr === selectedNumber}">
+        <div v-for="nr in '123456789'" :key="`cell-${index}-note-${nr}`" :class="{'notes__cell': true, 'notes__cell--highlighted': notes[nr] && nr === selectedNumber}">
           {{ notes[nr] ? nr : '' }}
         </div>
       </div>

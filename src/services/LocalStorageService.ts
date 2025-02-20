@@ -1,7 +1,16 @@
-export const get = (key: string): string | null => localStorage.getItem(key);
+import { StorageGetFunc, StorageRemoveFunc, StorageServiceInterface, StorageSetFunc } from "./StorageService.types";
 
-export const set = (key: string, value: string): void => localStorage.setItem(key, value);
+export const get: StorageGetFunc = (key: string): string | null => localStorage.getItem(key);
 
-export const remove = (key: string): void => localStorage.removeItem(key);
+export const set: StorageSetFunc = (key: string, value: string): void => localStorage.setItem(key, value);
 
-export const clear = (): void => localStorage.clear();
+export const remove: StorageRemoveFunc = (key: string): void => localStorage.removeItem(key);
+
+export const clear: StorageRemoveFunc = (): void => localStorage.clear();
+
+export const LocalStorageService: StorageServiceInterface = {
+    get,
+    set,
+    remove,
+    clear
+}

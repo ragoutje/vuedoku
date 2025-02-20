@@ -4,7 +4,7 @@ import Cell from "./Cell.vue";
 import * as sudokuService from "../services/SudokuService";
 import * as localStorageService from "../services/LocalStorageService";
 import { Difficulty } from "sudoku-gen/dist/types/difficulty.type";
-import { CellNotes } from "../services/SudokuService.types";
+import { CellNotes, SudokuGrid } from "../services/SudokuService.types";
 
 const initialized = ref(false);
 const selectedNumber = ref('-');
@@ -17,26 +17,16 @@ const notes = ref();
 const takingNotes = ref(false);
 const validate = ref(false);
 
-interface GameContainerProps {
-  selectedDifficulty: Difficulty
-}
-const props = defineProps<GameContainerProps>();
-
+const props = defineProps<{selectedDifficulty: Difficulty}>();
 const emit = defineEmits(['show-menu', 'selectNumber']);
 
 onBeforeMount(() => {
   setTimeout(() => {
-    let loadedCells;
-
+    let loadedCells: SudokuGrid | undefined;
     const storedSudoku = localStorageService.get('sudoku');
     const storedSelectedNumber = localStorageService.get('selectedNumber');
 
-    if (storedSudoku?.length) {
-      loadedCells = JSON.parse(storedSudoku);
-    } else {
-      loadedCells = newPuzzle(props.selectedDifficulty);
-    }
-
+    loadedCells = storedSudoku?.length ? JSON.parse(storedSudoku) : newPuzzle(props.selectedDifficulty);
     setGameData(loadedCells);
 
     if (storedSelectedNumber?.length) selectedNumber.value = storedSelectedNumber;
@@ -221,7 +211,7 @@ const cleanUpNotes = (index: number, newVal: string): void => {
         <h1>Vuedoku <small>({{ difficulty }})</small></h1>
       </div>
       <div class="content-block">
-        <div class="grid">
+        <div class="sudoku">
           <Cell v-for="(value, i) in input" :key="`cell-${i}`" :index="i" :puzzleValue="puzzle[i]" :inputValue="value"
             :notes="notes[i]" :selectedNumber="selectedNumber" :isValid="validateCell(solution[i], input[i])"
             @click="cellClickHandler(i)" />

@@ -1,0 +1,115 @@
+.sudoku {
+    margin: 0 auto;
+    width: 600px;
+    height: 600px;
+    display: grid;
+    grid-gap: 0;
+    grid-template-rows: repeat(9, 1fr);
+    grid-template-columns: repeat(9, 1fr);
+
+    &__cell {
+        position: relative;
+        background-color: white;
+        text-align: center;
+        vertical-align: middle;
+        user-select: none;
+        font-size: 24px;
+        border: 1px solid #454545;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 250ms ease-out;
+        overflow: hidden;
+
+        &--initial,
+        &--initial:hover {
+            background-color: #e2e2e2;
+        }
+
+        &:hover {
+            background-color: rgb(255, 233, 216);
+        }
+
+        &--highlighted {
+            background-color: rgb(255, 189, 135) !important;
+        }
+
+        &--error {
+            transition: all 0s linear;
+            background-color: rgb(255, 60, 0) !important;
+            color: white !important;
+        }
+
+        &:nth-child(1) {
+            border-top-left-radius: 16px;
+        }
+
+        &:nth-child(9) {
+            border-top-right-radius: 16px;
+        }
+
+        &:nth-child(73) {
+            border-bottom-left-radius: 16px;
+        }
+
+        &:nth-child(81) {
+            border-bottom-right-radius: 16px;
+        }
+    }
+
+    // Inner left/right border
+    .cell:nth-child(3n):not(:nth-child(9n)) {
+        border-right-width: 3px;
+    }
+
+    // Inner top border
+    .cell:nth-child(n+19):nth-child(-n+27) {
+        border-bottom-width: 3px;
+    }
+
+    // Inner bottom border
+    .cell:nth-child(n+46):nth-child(-n+54) {
+        border-bottom-width: 3px;
+    }
+}
+
+.notes {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-gap: 1px;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    font-size: 14px;
+    line-height: 1em;
+    font-style: italic;
+
+    &__cell {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: all 250ms ease-out;
+        background-color: transparent;
+
+        &--highlighted {
+            background-color: rgb(255, 189, 135);
+        }
+    }
+}
+
+@media (orientation: portrait) {
+    .sudoku {
+        width: auto;
+        height: auto;
+        aspect-ratio: 1 / 1;
+    }
+
+    .notes {
+        font-size: 12px;
+
+        &__cell {
+            border-radius: 4px;
+        }
+    }
+}

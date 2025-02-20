@@ -2,7 +2,7 @@ import { getSudoku } from "sudoku-gen";
 import { Difficulty } from "sudoku-gen/dist/types/difficulty.type";
 import { SudokuGrid } from "./SudokuService.types";
 
-export const generate = (difficulty: Difficulty | undefined = "easy"): SudokuGrid => {
+export const generate = (difficulty: Difficulty = "easy"): SudokuGrid => {
     const newSudokuObj = getSudoku(difficulty);
 
     let notesArr = [];
