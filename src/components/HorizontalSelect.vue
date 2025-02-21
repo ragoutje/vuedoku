@@ -1,8 +1,14 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 
+export type ValuesObjectType = Array<string>;
+
+export type LabelsObjectType = {
+    [key: string]: string;
+};
+
 /* Interface declarations */
-const { selected, values, labels } = defineProps<{selected: number, values: Array<string>, labels: Array<string>}>()
+const { selected, values, labels } = defineProps<{selected: number, values: ValuesObjectType, labels: LabelsObjectType}>()
 const emit = defineEmits(['change-selected']);
 
 /* Internal state */
@@ -28,7 +34,7 @@ const nextHandler = (): void => {
         <div class="horizontal-select__label">{{ labels[values[current]] }}</div>
         <div class="horizontal-select__button">
             <span
-v-if="current !== values.length - 1" class="material-symbols-outlined"
+v-if="current !== Object.keys(values).length - 1" class="material-symbols-outlined"
                 @click="nextHandler">chevron_right</span>
         </div>
     </div>

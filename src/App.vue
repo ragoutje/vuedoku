@@ -4,13 +4,13 @@ import { ColorMode } from './types/color-mode';
 import { Difficulty } from 'sudoku-gen/dist/types/difficulty.type';
 import * as localStorageService from './services/LocalStorageService';
 import GameContainer from './components/GameContainer.vue'
-import HorizontalSelect from './components/HorizontalSelect.vue';
+import HorizontalSelect, { ValuesObjectType, LabelsObjectType } from './components/HorizontalSelect.vue';
 
 /* Consts */
-const colorModes: Array<ColorMode> = ['auto', 'light', 'dark'];
-const colorModeLabels = { 'auto': 'Theme: auto', 'light': 'Light mode', 'dark': 'Dark mode'};
-const difficulties: Array<Difficulty> = ['easy', 'medium', 'hard', 'expert'];
-const difficultyLabels = { 'easy': 'Easy', 'medium': 'Medium', 'hard': 'Hard', 'expert': 'Expert'};
+const colorModes: ValuesObjectType = ['auto', 'light', 'dark'];
+const colorModeLabels: LabelsObjectType = { 'auto': 'Theme: auto', 'light': 'Light mode', 'dark': 'Dark mode'};
+const difficulties: ValuesObjectType = ['easy', 'medium', 'hard', 'expert'];
+const difficultyLabels: LabelsObjectType = { 'easy': 'Easy', 'medium': 'Medium', 'hard': 'Hard', 'expert': 'Expert'};
 
 /* Refs */
 const isLoading = ref(true);
@@ -51,12 +51,13 @@ const checkForPreviousGame = (): void => {
 }
 
 const checkForPreviousColorMode = (): void => {
-  selectedColorMode.value = localStorageService.get('selectedColorMode') ?? 'auto';
+  const previousVal = <ColorMode>localStorageService.get('selectedColorMode') ?? 'auto';
+  selectedColorMode.value = previousVal;
   setColorMode(selectedColorMode.value);
 }
 
 const checkForPreviousDifficulty = (): void => {
-  const storedDifficulty = localStorageService.get('selectedDifficulty') ?? 'medium';
+  const storedDifficulty = <Difficulty>localStorageService.get('selectedDifficulty') ?? 'medium';
 
   if (storedDifficulty && storedDifficulty.length) {
     const diff: Difficulty = storedDifficulty;
@@ -104,13 +105,13 @@ const menuHandler = (newVal: boolean): void => {
         <div class="content-block center">
           <HorizontalSelect
 :values="difficulties" :selected="difficulties.indexOf(selectedDifficulty)" :labels="difficultyLabels"
-            @change-selected="(newVal) => selectedDifficulty = difficulties[newVal]" />
+            @change-selected="(newVal: number) => selectedDifficulty = <Difficulty>difficulties[newVal]" />
         </div>
 
         <div class="content-block center">
           <HorizontalSelect
 :values="colorModes" :selected="colorModes.indexOf(selectedColorMode)" :labels="colorModeLabels"
-            @change-selected="(newVal) => selectedColorMode = colorModes[newVal]" />
+            @change-selected="(newVal: number) => selectedColorMode = <ColorMode>colorModes[newVal]" />
         </div>
 
         <div class="content-block">
