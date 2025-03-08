@@ -24,7 +24,6 @@
         &--initial {
             background-color: var(--sudoku-cell-initial-background-color);
             color: var(--sudoku-cell-initial-color);
-            font-weight: var(--sudoku-cell-initial-font-weight);
         }
         
         @media (pointer: fine) {
