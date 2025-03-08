@@ -36,7 +36,11 @@
     --sudoku-cell-background-color-dark: rgb(0, 0, 0);
     
     --sudoku-cell-border-color: #454545;
-    --sudoku-cell-border-color-dark: rgb(187, 187, 187);
+    --sudoku-cell-border-color-dark: rgb(99, 99, 99);
+    --sudoku-cell-border-color-structure: #454545;
+    --sudoku-cell-border-color-structure-dark: rgb(255, 255, 255);
+    --sudoku-cell-border-width: 1px;
+    --sudoku-cell-border-width-structure: 2px;
 
     --sudoku-cell-initial-background-color: #e2e2e2;
     --sudoku-cell-initial-background-color-dark: rgb(56, 56, 56);
@@ -94,6 +98,7 @@
     
     --sudoku-cell-background-color: var(--sudoku-cell-background-color-dark);
     --sudoku-cell-border-color: var(--sudoku-cell-border-color-dark);
+    --sudoku-cell-border-color-structure: var(--sudoku-cell-border-color-structure-dark);
 
     --sudoku-cell-initial-background-color: var(--sudoku-cell-initial-background-color-dark);
     --sudoku-cell-initial-color: var(--sudoku-cell-initial-color-dark);

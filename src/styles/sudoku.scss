@@ -14,7 +14,7 @@
         vertical-align: middle;
         user-select: none;
         font-size: 24px;
-        border: 1px solid var(--sudoku-cell-border-color);
+        border: var(--sudoku-cell-border-width) solid var(--sudoku-cell-border-color);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -49,35 +49,54 @@
             color: var(--sudoku-cell-error-font-color) !important;
         }
 
+        // Corner radii
         &:nth-child(1) {
             border-top-left-radius: 16px;
         }
-
         &:nth-child(9) {
             border-top-right-radius: 16px;
         }
-
         &:nth-child(73) {
             border-bottom-left-radius: 16px;
         }
-
         &:nth-child(81) {
             border-bottom-right-radius: 16px;
         }
 
         // Inner left/right border
         &:nth-child(3n):not(:nth-child(9n)) {
-            border-right-width: 3px;
+            border-right-width: var(--sudoku-cell-border-width-structure);
+            border-right-color: var(--sudoku-cell-border-color-structure);
         }
     
         // Inner top border
         &:nth-child(n+19):nth-child(-n+27) {
-            border-bottom-width: 3px;
+            border-bottom-width: var(--sudoku-cell-border-width-structure);
+            border-bottom-color: var(--sudoku-cell-border-color-structure);
         }
     
         // Inner bottom border
         &:nth-child(n+46):nth-child(-n+54) {
-            border-bottom-width: 3px;
+            border-bottom-width: var(--sudoku-cell-border-width-structure);
+            border-bottom-color: var(--sudoku-cell-border-color-structure);
+        }
+
+        // Outer border width
+        &:nth-child(-n+9) {
+            border-top-width: var(--sudoku-cell-border-width-structure);
+            border-top-color: var(--sudoku-cell-border-color-structure);
+        }
+        &:nth-child(n+73) {
+            border-bottom-width: var(--sudoku-cell-border-width-structure);
+            border-bottom-color: var(--sudoku-cell-border-color-structure);
+        }
+        &:nth-child(9n+1) {
+            border-left-width: var(--sudoku-cell-border-width-structure);
+            border-left-color: var(--sudoku-cell-border-color-structure);
+        }
+        &:nth-child(9n+9) {
+            border-right-width: var(--sudoku-cell-border-width-structure);
+            border-right-color: var(--sudoku-cell-border-color-structure);
         }
     }
 }
